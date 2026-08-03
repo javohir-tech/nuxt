@@ -1,15 +1,12 @@
 <template>
   <div>
-    salom{{ num }}
-
-    <button @click="increment">increment</button>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 
-<script setup>
-const num = ref(1)
 
-const increment = () => {
-  num.value++
-}
-</script>
+<style>
+@import url("./shared/styles/global.css");
+</style>
