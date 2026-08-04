@@ -13,8 +13,6 @@
 </template>
 
 <style>
-@import url("../../../shared/styles/reset.css");
-
 .navbar {
     background-color: #224248;
 }
