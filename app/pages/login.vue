@@ -10,5 +10,4 @@ import { Login } from '~/features/auth/login';
 </template>
 
 <style>
-@import url("../shared/styles/reset.css");
 </style>
