@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { Button } from '~/shared/ui/Button';
 import { CommentList } from '~/entities/comment';
-
+// definePageMeta({ middleware: 'auth' });
 const save = () => {
     console.log("save")
 }
