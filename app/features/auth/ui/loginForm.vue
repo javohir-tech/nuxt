@@ -13,8 +13,7 @@ const login_payload = reactive<LoginPayload>({
     password: ""
 })
 
-const handleSubmit = (e: any) => {
-    e.preventDefault();
+const handleSubmit = () => {
     if (login_payload.password && login_payload.username_or_email) {
         login({...login_payload})
     }
