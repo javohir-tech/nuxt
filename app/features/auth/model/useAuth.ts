@@ -6,21 +6,36 @@ import type {
   SignUpResponse,
 } from "./types";
 
+import type { ApiErrorBody } from "~/shared/types";
+
+import type { FetchError } from "ofetch";
+
 export const useAuth = () => {
   const access_token = useCookie<string>("access_token");
+  const error = ref<string | null>(null);
+  const pending = ref<boolean>(false);
 
   // Login
   const handleLogin = async (payload: LoginPayload) => {
-    const response: LoginResponse = await login(payload);
+    pending.value = true;
+    try {
+      const response: LoginResponse = await login(payload);
 
-    access_token.value = response.data.access_token;
+      access_token.value = response.data.access_token;
 
-    if (access_token.value) {
-      await navigateTo("/");
+      if (access_token.value) {
+        await navigateTo("/");
+      }
+    } catch (err) {
+      const fetchError = err as FetchError<ApiErrorBody>;
+      error.value = fetchError?.data?.detail ?? "Internal Server Error";
+    } finally {
+      pending.value = false;
     }
   };
 
   const handleRegister = async (payload: SignUpPayload) => {
+    pending.value = true;
     try {
       const response: SignUpResponse = await signup(payload);
 
@@ -29,8 +44,11 @@ export const useAuth = () => {
       if (access_token.value) {
         await navigateTo("/");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      const fetchError = err as FetchError<ApiErrorBody>;
+      error.value = fetchError.data?.detail ?? "Internal Server Error";
+    } finally {
+      pending.value = false;
     }
   };
 

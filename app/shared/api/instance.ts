@@ -12,5 +12,9 @@ export const useApi = $fetch.create({
     if (response.status === 401) {
       await navigateTo("/login");
     }
+
+    if (response.status >= 500) {
+      console.log("Server bilan bog'liq hato");
+    }
   },
 });
