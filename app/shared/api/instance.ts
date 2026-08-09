@@ -1,5 +1,5 @@
 export const useApi = $fetch.create({
-  baseURL: "https://jsonplaceholder.typicode.com",
+  baseURL: "http://127.0.0.1:8000",
   onRequest({ options }) {
     const token = useCookie("auth_token");
     if (token) {
