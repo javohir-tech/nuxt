@@ -1,7 +1,3 @@
-// requests
-import { loginRequest } from "~/shared/api";
-import { getApiErrorMessage } from "~/shared/api";
-
 // validators
 import { validateEmail, validatePassword } from "~/shared/lib";
 
@@ -27,18 +23,6 @@ export default function useLogin() {
     if (passwordError) {
       error.value = passwordError;
       return;
-    }
-
-    // api layer
-    loading.value = true;
-    try {
-      const response = await loginRequest(email, password);
-      user.value = response.user;
-      //   navigateTo("/");
-    } catch (err) {
-      error.value = getApiErrorMessage(err);
-    } finally {
-      loading.value = false;
     }
   }
 

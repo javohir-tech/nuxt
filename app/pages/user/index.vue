@@ -1,13 +1,15 @@
 <template>
-user profile
+    user profile
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-    middleware : [
-        function (to , from) {
+    middleware: [
+        function (to, from) {
             const token = useCookie("token")
-            console.log("token yogu brat")
+            if (!token) {
+                console.log("token yogu brat")
+            }
         }
     ]
 })
