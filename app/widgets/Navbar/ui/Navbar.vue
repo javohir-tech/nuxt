@@ -1,20 +1,46 @@
+<script setup lang="ts">
+import { Button } from '~/shared/ui/Button';
+import { menu } from '../model/useMenu';
+
+import { useAuth } from '~/features/auth';
+
+const { handleLogout, pending, error } = useAuth()
+</script>
+
+
 <template>
     <header class="navbar">
-        <nav>
-            <div class="container">
-                <ul class="nav_list">
-                    <li v-for="item in menu" :key="item.to">
-                        <NuxtLink active-class="isActive_link" :to="item.to">{{ item.title }}</NuxtLink>
-                    </li>
-                </ul>
+        <div class="container">
+            <div class="navbar-box">
+                <nav>
+                    <ul class="nav_list">
+                        <li v-for="item in menu" :key="item.to">
+                            <NuxtLink active-class="isActive_link" :to="item.to">{{ item.title }}</NuxtLink>
+                        </li>
+                    </ul>
+
+                </nav>
+                <div>
+                    <Button title="logout" :pending="pending" @click="handleLogout" />
+                </div>
+                <div v-if="error">
+                    {{ error }}
+                </div>
             </div>
-        </nav>
+        </div>
     </header>
 </template>
 
 <style>
 .navbar {
     background-color: #224248;
+    margin-bottom: 20px;
+}
+
+.navbar-box {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
 }
 
 
@@ -26,9 +52,10 @@
     margin-bottom: 20px;
     padding: 20px 0px;
     list-style: none;
+
     a {
         text-decoration: none;
-        color: white ;
+        color: white;
         font-size: 16px;
         font-weight: 400;
     }
@@ -38,7 +65,3 @@
     color: red !important;
 }
 </style>
-
-<script setup lang="ts">
-import { menu } from '../model/useMenu';
-</script>

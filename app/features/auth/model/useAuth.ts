@@ -1,9 +1,10 @@
-import { login, signup } from "../api";
+import { login, signup, logout } from "../api";
 import type {
   LoginPayload,
   LoginResponse,
   SignUpPayload,
   SignUpResponse,
+  LogoutResponse,
 } from "./types";
 
 import type { ApiErrorBody } from "~/shared/types";
@@ -11,7 +12,8 @@ import type { ApiErrorBody } from "~/shared/types";
 import type { FetchError } from "ofetch";
 
 export const useAuth = () => {
-  const access_token = useCookie<string>("access_token");
+  const access_token = useCookie<string | null>("access_token");
+  const refresh_token = useCookie<string | null>("refresh_token");
   const error = ref<string | null>(null);
   const pending = ref<boolean>(false);
 
@@ -22,6 +24,7 @@ export const useAuth = () => {
       const response: LoginResponse = await login(payload);
 
       access_token.value = response.data.access_token;
+      refresh_token.value = response.data.refresh_token;
 
       if (access_token.value) {
         await navigateTo("/");
@@ -40,6 +43,7 @@ export const useAuth = () => {
       const response: SignUpResponse = await signup(payload);
 
       access_token.value = response.user.access_token;
+      refresh_token.value = response.user.refresh_token;
 
       if (access_token.value) {
         await navigateTo("/");
@@ -52,5 +56,30 @@ export const useAuth = () => {
     }
   };
 
-  return { login: handleLogin, signup: handleRegister };
+  const handleLogout = async () => {
+    pending.value = true;
+    try {
+      if (refresh_token.value) {
+        console.log(refresh_token.value)
+        const response :LogoutResponse = await logout({ refresh_token: refresh_token.value });
+        access_token.value = null;
+        refresh_token.value = null;
+        await navigateTo("/auth/login");
+      }
+    } catch (err) {
+      const fetchError = err as FetchError<ApiErrorBody>;
+      error.value = fetchError.data?.detail ?? "Internal Server Error";
+      console.log(error.value)
+    } finally {
+      pending.value = false;
+    }
+  };
+
+  return {
+    handleLogin,
+    handleRegister,
+    handleLogout,
+    pending,
+    error,
+  };
 };

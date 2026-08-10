@@ -30,3 +30,10 @@ export interface SignUpResponse {
     refresh_token: string;
   };
 }
+export interface LogoutPayload {
+  refresh_token: string;
+}
+
+export interface LogoutResponse {
+  message: string;
+}

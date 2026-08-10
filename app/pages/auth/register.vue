@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { SignUp } from '~/features/auth';
 
-
+definePageMeta({
+    middleware: ["guest"]
+})
 </script>
 
 <template>
-    <SignUp />
+    <div class="container">
+        <SignUp />
+    </div>
 </template>

@@ -1,16 +1,17 @@
 <template>
-    <button :type="type" :disabled="disabled" @click="handleClick">{{ title }}</button>
+    <button :type="type" :disabled="disabled" @click="handleClick">{{ pending ? "Loading..." : title }}</button>
 </template>
 
 <script setup lang="ts">
 interface Props {
     title: string;
     type?: "submit" | "button";
-    disabled?: boolean
+    disabled?: boolean,
+    pending?: boolean
 }
 
 const emit = defineEmits<{
-    (e: "click" , event : MouseEvent): void
+    (e: "click", event: MouseEvent): void
 }>()
 
 withDefaults(defineProps<Props>(), {
@@ -18,7 +19,7 @@ withDefaults(defineProps<Props>(), {
     disabled: false
 })
 
-const handleClick = (event : MouseEvent) => {
-    emit("click" , event)
+const handleClick = (event: MouseEvent) => {
+    emit("click", event)
 }
 </script>
