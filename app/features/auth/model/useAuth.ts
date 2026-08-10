@@ -25,13 +25,13 @@ export const useAuth = () => {
 
       access_token.value = response.data.access_token;
       refresh_token.value = response.data.refresh_token;
-
       if (access_token.value) {
         await navigateTo("/");
       }
     } catch (err) {
       const fetchError = err as FetchError<ApiErrorBody>;
       error.value = fetchError?.data?.detail ?? "Internal Server Error";
+      // console.log(error.value);
     } finally {
       pending.value = false;
     }
@@ -60,8 +60,10 @@ export const useAuth = () => {
     pending.value = true;
     try {
       if (refresh_token.value) {
-        console.log(refresh_token.value)
-        const response :LogoutResponse = await logout({ refresh_token: refresh_token.value });
+        console.log(refresh_token.value);
+        const response: LogoutResponse = await logout({
+          refresh_token: refresh_token.value,
+        });
         access_token.value = null;
         refresh_token.value = null;
         await navigateTo("/auth/login");
@@ -69,7 +71,7 @@ export const useAuth = () => {
     } catch (err) {
       const fetchError = err as FetchError<ApiErrorBody>;
       error.value = fetchError.data?.detail ?? "Internal Server Error";
-      console.log(error.value)
+      console.log(error.value);
     } finally {
       pending.value = false;
     }
