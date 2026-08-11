@@ -1,10 +1,9 @@
 import { login, signup, logout } from "../api";
 import type {
   LoginPayload,
-  LoginResponse,
   SignUpPayload,
-  SignUpResponse,
   LogoutResponse,
+  AuthResponse,
 } from "./types";
 
 import type { ApiErrorBody } from "~/shared/types";
@@ -21,10 +20,10 @@ export const useAuth = () => {
   const handleLogin = async (payload: LoginPayload) => {
     pending.value = true;
     try {
-      const response: LoginResponse = await login(payload);
+      const response: AuthResponse = await login(payload);
 
-      access_token.value = response.data.access_token;
-      refresh_token.value = response.data.refresh_token;
+      access_token.value = response.data.tokens.access_token;
+      refresh_token.value = response.data.tokens.refresh_token;
       if (access_token.value) {
         await navigateTo("/");
       }
@@ -40,10 +39,10 @@ export const useAuth = () => {
   const handleRegister = async (payload: SignUpPayload) => {
     pending.value = true;
     try {
-      const response: SignUpResponse = await signup(payload);
+      const response: AuthResponse = await signup(payload);
 
-      access_token.value = response.user.access_token;
-      refresh_token.value = response.user.refresh_token;
+      access_token.value = response.data.tokens.access_token;
+      refresh_token.value = response.data.tokens.refresh_token;
 
       if (access_token.value) {
         await navigateTo("/");

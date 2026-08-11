@@ -1,14 +1,3 @@
-export interface token_data {
-  access_token: string;
-  refresh_token: string;
-}
-
-export interface LoginResponse {
-  message: string;
-  success: boolean;
-  data: token_data;
-}
-
 export interface LoginPayload {
   username_or_email: string;
   password: string;
@@ -20,20 +9,42 @@ export interface SignUpPayload {
   username: string;
 }
 
-export interface SignUpResponse {
-  message: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    access_token: string;
-    refresh_token: string;
-  };
-}
 export interface LogoutPayload {
   refresh_token: string;
 }
 
-export interface LogoutResponse {
+///////////////////////////////////////////////////////////
+export interface ApiInfo {
+  success: boolean;
   message: string;
+}
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  is_active: boolean;
+  is_staff: boolean;
+}
+
+export interface Token {
+  access_token: string;
+  refresh_token: string;
+}
+
+export interface AuthResponse extends ApiInfo {
+  data: {
+    user: User;
+    tokens: Token;
+  };
+}
+
+export interface LogoutResponse extends ApiInfo {}
+
+export interface RerfeshResponse extends ApiInfo {
+  data: {
+    tokens: {
+      access_token: string;
+    };
+  };
 }
