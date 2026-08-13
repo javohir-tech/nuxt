@@ -5,4 +5,6 @@ export const menu = [
   { title: "About", to: ROUTES.ABOUT },
   { title: "User", to: ROUTES.USER },
   { title: "Login", to: ROUTES.LOGIN },
+  { title: "Products", to: ROUTES.PRODUCT },
+  { title: "My Productes", to: ROUTES.MY_PRODUCTES },
 ];
