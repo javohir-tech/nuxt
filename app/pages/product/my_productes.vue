@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ProductMyList } from '~/entities/product';
 
 
 </script>
 
 <template>
     <div class="container">
-        <ProductMyList />
+        my productes
     </div>
 </template>

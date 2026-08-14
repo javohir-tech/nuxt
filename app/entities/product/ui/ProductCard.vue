@@ -1,51 +1,54 @@
 <script setup lang="ts">
 import { Button } from '~/shared/ui/Button';
+import type { Product } from '../models/types';
 
-const add_cart = ref<boolean>(false)
-const count = ref<number>(0)
+const props = defineProps<{
+    product: Product,
+    count: number
+}>()
+const emit = defineEmits<{
+    addToCart: [product: Product],
+    increment: [productId: number],
+    decrement: [productId: number],
+}>()
 
-interface Product {
-    id: number;
-    name: string;
-    price: number;
-    user_id: number;
+
+const handleClick = () => {
+    emit("addToCart", props.product)
 }
 
-const props = defineProps<Product>()
+const increment = () => {
+    emit("increment", props.product.id)
+}
 
-const handleCard = (id: number) => {
-    add_cart.value = !add_cart.value
-    if(add_cart.value){   
-        console.log('savatga qoshildi')
-    }else {
-        console.log("savatdan oldindi")
-    }
+const decrement = () => {
+    emit("decrement", props.product.id)
 }
 </script>
 
 <template>
     <div class="product_cart">
-        <p>{{ props.name }}</p>
-        <p>{{ props.price }}</p>
-        <div class="cart_button" v-if="!add_cart">
-            <Button title="Savatga" type="button" @click="handleCard(props.id)" />
+        <p>{{ product.name }}</p>
+        <p>{{ product.price }}</p>
+        <div style="text-align: end;" v-if="count === 0">
+            <Button title="savatga" @click="handleClick()" />
         </div>
-        <div v-else class="cart_button">
-            <Button  title="-"/>
-            {{ count }}
-            <Button  title="+"/>
+        <div style="text-align: end;" v-else>
+            <button @click="decrement()">-</button>
+            <span>{{ count }}</span>
+            <button @click="increment()">+</button>
         </div>
     </div>
 </template>
 
 <style scoped>
-.product_cart{
+.product_cart {
     border: 1px solid black;
     padding: 10px;
     border-radius: 10px;
 }
 
-.cart_button{
+.cart_button {
     text-align: end;
 }
 </style>
