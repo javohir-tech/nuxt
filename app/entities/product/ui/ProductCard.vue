@@ -30,14 +30,21 @@ const decrement = () => {
     <div class="product_cart">
         <p>{{ product.name }}</p>
         <p>{{ product.price }}</p>
-        <div style="text-align: end;" v-if="count === 0">
-            <Button title="savatga" @click="handleClick()" />
-        </div>
-        <div style="text-align: end;" v-else>
-            <button @click="decrement()">-</button>
-            <span>{{ count }}</span>
-            <button @click="increment()">+</button>
-        </div>
+        <ClientOnly>
+            <div style="text-align: end;" v-if="count === 0">
+                <Button title="savatga" @click="handleClick()" />
+            </div>
+            <div style="text-align: end;" v-else>
+                <button @click="decrement()">-</button>
+                <span>{{ count }}</span>
+                <button @click="increment()">+</button>
+            </div>
+            <template #fallback>
+                <div style="text-align: end;">
+                    <Button title="savatga"/>
+                </div>
+            </template>
+        </ClientOnly>
     </div>
 </template>
 

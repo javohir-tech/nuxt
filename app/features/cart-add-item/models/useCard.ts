@@ -2,16 +2,23 @@ import type { Product } from "~/entities/product";
 
 export default function useCart() {
   type ProductCartItem = Product & { count: number };
-  const cart_products = useState<ProductCartItem[]>("cart_productes", () => []);
-  const count = ref<number>(0);
+  const cart_products = useLocalStorage<ProductCartItem[]>(
+    "cart_productes",
+    () => [],
+    { writeDefaults: false },
+  );
+
+  function getCount(id: number): number {
+    const item = cart_products.value.find((p) => p.id === id);
+    return item?.count ?? 0;
+  }
 
   function add_cart(product: Product) {
     const exist = cart_products.value.some((p) => p.id === product.id);
 
     if (!exist) {
-    //   console.log(product);
+      //   console.log(product);
       cart_products.value.push({ ...product, count: 1 });
-      count.value = 1;
     } else {
       console.log("bu qoshilgan");
     }
@@ -25,7 +32,6 @@ export default function useCart() {
     } else {
       if (exist.count < 10) {
         exist.count++;
-        count.value = exist.count;
       } else {
         console.log("maximum ");
       }
@@ -45,12 +51,11 @@ export default function useCart() {
             (p) => p.count !== 0,
           );
         }
-        count.value = exist.count;
       } else {
         console.log("minimum");
       }
     }
   }
 
-  return { cart_products, count, add_cart, increment, decrement };
+  return { cart_products, getCount, add_cart, increment, decrement };
 }

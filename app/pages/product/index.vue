@@ -2,7 +2,7 @@
 import { ProductCardWithCart } from '~/features/cart-add-item';
 import { getProducts } from '~/entities/product';
 
-const { data , pending , error } = useAsyncData("produxtes", () => getProducts())
+const { data , pending , error } = useAsyncData("productes", () => getProducts())
 </script>
 <template>
     <div class="container">
