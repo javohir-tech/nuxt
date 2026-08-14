@@ -7,11 +7,12 @@ definePageMeta({
                 return navigateTo("/auth/login")
             }
         }
-    ]
+    ] ,  
+    layout : "user"
 })
 </script>
 <template>
     <div class="container">
-salom
+user page
     </div>
 </template>
