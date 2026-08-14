@@ -4,7 +4,7 @@ export default function useCart() {
   type ProductCartItem = Product & { count: number };
   const cart_products = useLocalStorage<ProductCartItem[]>(
     "cart_productes",
-    () => [],
+    [],
     { writeDefaults: false },
   );
 
@@ -57,5 +57,22 @@ export default function useCart() {
     }
   }
 
-  return { cart_products, getCount, add_cart, increment, decrement };
+  function deleteStore(id: number) {
+    const exist = cart_products.value.find((p) => p.id === id);
+
+    if (!exist) {
+      alert("bunday product topilmadi");
+    } else {
+      cart_products.value = cart_products.value.filter((p) => p.id !== id);
+    }
+  }
+
+  return {
+    cart_products,
+    getCount,
+    add_cart,
+    increment,
+    decrement,
+    deleteStore,
+  };
 }
