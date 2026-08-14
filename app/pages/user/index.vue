@@ -1,16 +1,17 @@
-<template>
-    user profile
-</template>
-
 <script setup lang="ts">
 definePageMeta({
     middleware: [
-        function (to, from) {
-            const token = useCookie("token")
-            if (!token) {
-                console.log("token yogu brat")
+         (to, from) => {
+            const token = useCookie("access_token")
+            if (!token.value) {
+                return navigateTo("/auth/login")
             }
         }
     ]
 })
 </script>
+<template>
+    <div class="container">
+salom
+    </div>
+</template>

@@ -2,12 +2,11 @@
 import { Button } from '~/shared/ui/Button';
 import { menu } from '../model/useMenu';
 
-import { useAuth } from '~/features/auth';
 import { useThemeStore } from '~/shared/model';
+import { UserAvatar } from '~/entities/user';
 
 const themeStore = useThemeStore()
 
-const { handleLogout, pending, error } = useAuth()
 
 </script>
 
@@ -24,12 +23,9 @@ const { handleLogout, pending, error } = useAuth()
                     </ul>
 
                 </nav>
-                <div>
-                    <Button title="logout" :pending="pending" @click="handleLogout" />
+                <div style="display: flex; gap: 10px;">
+                    <UserAvatar :username="'Suvonov'"/>
                     <Button :title="themeStore.theme === 'light' ? 'dark' : 'ligth'" @click="themeStore.toggleTheme" />
-                </div>
-                <div v-if="error">
-                    {{ error }}
                 </div>
             </div>
         </div>
