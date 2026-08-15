@@ -8,19 +8,11 @@ const { cart_products } = useCart()
 
 async function handleCreateOrder() {
     const carts = cart_products.value
-    for (let i = 0; i < carts.length; i++) {
-        if (carts[i]?.id && carts[i]?.count) {
-            const cart = carts[i]
-            if (!cart) continue
-            const product_id = cart.id
-            const quantity = cart.count
-            try {
-                await create_order({ product_id: product_id, quantity: quantity })
-            } catch (error) {
-                continue
-            }
-        }
-    }
+    const requests = carts.filter(cart => cart.id && cart.count).map(cart => create_order({ product_id: cart.id, quantity: cart.count }))
+
+    const results = await Promise.allSettled(requests)
+
+    console.log(results)
 }
 
 definePageMeta({
