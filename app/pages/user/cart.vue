@@ -6,6 +6,23 @@ import { useOrder } from '~/features/create_order';
 const { create_order, loading } = useOrder()
 const { cart_products } = useCart()
 
+async function handleCreateOrder() {
+    const carts = cart_products.value
+    for (let i = 0; i < carts.length; i++) {
+        if (carts[i]?.id && carts[i]?.count) {
+            const cart = carts[i]
+            if (!cart) continue
+            const product_id = cart.id
+            const quantity = cart.count
+            try {
+                await create_order({ product_id: product_id, quantity: quantity })
+            } catch (error) {
+                continue
+            }
+        }
+    }
+}
+
 definePageMeta({
     layout: "user"
 })
@@ -14,10 +31,7 @@ definePageMeta({
 <template>
     <ClientOnly>
 
-        <div
-            v-if="cart_products.length > 0"
-            class="cart-page"
-        >
+        <div v-if="cart_products.length > 0" class="cart-page">
             <div class="cart-header">
                 <div>
                     <h1>Shopping Cart</h1>
@@ -30,32 +44,17 @@ definePageMeta({
             </div>
 
             <div class="cart-list">
-                <div
-                    v-for="product in cart_products"
-                    :key="product.id"
-                    class="cart-item"
-                >
+                <div v-for="product in cart_products" :key="product.id" class="cart-item">
                     <ProductCardWithCart :product="product" />
 
-                    <div class="order-action">
-                        <Button
-                            title="Buyurtma berish"
-                            :disabled="loading"
-                            :pending="loading"
-                            @click="create_order({
-                                product_id: product.id,
-                                quantity: product.count
-                            })"
-                        />
-                    </div>
+                </div>
+                <div class="order-action">
+                    <Button title="Buyurtma berish" :disabled="loading" :pending="loading" @click="handleCreateOrder" />
                 </div>
             </div>
         </div>
 
-        <div
-            v-else
-            class="empty-cart"
-        >
+        <div v-else class="empty-cart">
             <div class="empty-icon">
                 🛒
             </div>
@@ -66,10 +65,7 @@ definePageMeta({
                 Hozircha savatingizda hech qanday mahsulot yo‘q.
             </p>
 
-            <NuxtLink
-                to="/product"
-                class="products-link"
-            >
+            <NuxtLink to="/product" class="products-link">
                 Mahsulotlarni ko‘rish
             </NuxtLink>
         </div>

@@ -20,6 +20,7 @@ export default function useOrder() {
         (p) => p.id !== payload.product_id,
       );
       console.log(response.message);
+      console.log(response.data)
     } catch (error) {
       console.log(error);
     }
