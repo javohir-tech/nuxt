@@ -1,13 +1,11 @@
-<template>
-    about page
-    <Button title="Batafsil" :disabled="false" @click="save" />
-</template>
-
 <script setup lang="ts">
-import { Button } from '~/shared/ui/Button';
-// definePageMeta({ middleware: 'auth' });
-const save = () => {
-    console.log("save")
-}
+
 
 </script>
+
+
+<template>
+    <div class="container">
+        about page
+    </div>
+</template>

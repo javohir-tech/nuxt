@@ -6,10 +6,7 @@ import { useThemeStore } from '~/shared/model';
 import { UserAvatar } from '~/entities/user';
 
 const themeStore = useThemeStore()
-
-
 </script>
-
 
 <template>
     <header class="navbar">
@@ -18,14 +15,23 @@ const themeStore = useThemeStore()
                 <nav>
                     <ul class="nav_list">
                         <li v-for="item in menu" :key="item.to">
-                            <NuxtLink active-class="isActive_link" :to="item.to">{{ item.title }}</NuxtLink>
+                            <NuxtLink
+                                active-class="isActive_link"
+                                :to="item.to"
+                            >
+                                {{ item.title }}
+                            </NuxtLink>
                         </li>
                     </ul>
-
                 </nav>
-                <div style="display: flex; gap: 10px;">
-                    <UserAvatar :username="'Suvonov'"/>
-                    <Button :title="themeStore.theme === 'light' ? 'dark' : 'ligth'" @click="themeStore.toggleTheme" />
+
+                <div class="navbar_actions">
+                    <UserAvatar :username="'Suvonov'" />
+
+                    <Button
+                        :title="themeStore.theme === 'light' ? 'dark' : 'ligth'"
+                        @click="themeStore.toggleTheme"
+                    />
                 </div>
             </div>
         </div>
@@ -34,35 +40,64 @@ const themeStore = useThemeStore()
 
 <style>
 .navbar {
-    background-color: #224248;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
     margin-bottom: 20px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
 .navbar-box {
-    justify-content: space-between;
-    align-items: center;
     display: flex;
-}
+    align-items: center;
+    justify-content: space-between;
 
+    min-height: 72px;
+}
 
 .nav_list {
     display: flex;
-    gap: 20px;
+    align-items: center;
+    gap: 8px;
+
     margin: 0;
     padding: 0;
-    margin-bottom: 20px;
-    padding: 20px 0px;
-    list-style: none;
 
-    a {
-        text-decoration: none;
-        color: white;
-        font-size: 16px;
-        font-weight: 400;
-    }
+    list-style: none;
 }
 
-.isActive_link {
-    color: red !important;
+.nav_list a {
+    display: flex;
+    align-items: center;
+
+    padding: 9px 14px;
+
+    border-radius: 8px;
+
+    color: #6b7280;
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.nav_list a:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.nav_list .isActive_link {
+    background: #111827;
+    color: #ffffff !important;
+}
+
+.navbar_actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 </style>

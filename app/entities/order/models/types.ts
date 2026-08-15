@@ -6,3 +6,15 @@ export interface Order {
   price: number;
   product_name: number;
 }
+
+export interface OrderItem {
+  id: number;
+  status: string;
+  items: Order[];
+}
+
+export interface ResponseMyOrders {
+  success: true;
+  message: string;
+  data: OrderItem[];
+}

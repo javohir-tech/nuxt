@@ -95,32 +95,31 @@ const { data, pending, error } = useAsyncData("user", () => getUser())
 <style scoped>
 .profile-page {
     min-height: calc(100vh - 80px);
-    background: #f5f7fb;
-    padding: 50px 20px;
+    padding: 30px 20px;
+    background: #f9fafb;
 }
 
 .profile-card {
     max-width: 700px;
     margin: 0 auto;
-    background: #fff;
-    border-radius: 24px;
+
     overflow: hidden;
-    border: 1px solid #e8eaf0;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
 .profile-header {
-    height: 150px;
-    background: linear-gradient(
-        135deg,
-        #4f46e5,
-        #6366f1,
-        #8b5cf6
-    );
+    height: 120px;
+
+    background: #111827;
 }
 
 .profile-content {
-    padding: 0 35px 35px;
+    padding: 0 25px 25px;
 }
 
 .profile-top {
@@ -130,42 +129,46 @@ const { data, pending, error } = useAsyncData("user", () => getUser())
 }
 
 .avatar {
-    width: 100px;
-    height: 100px;
-    margin-top: -50px;
+    width: 82px;
+    height: 82px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: white;
-    border: 5px solid white;
+    margin-top: -41px;
+
+    background: #ffffff;
+    border: 4px solid #ffffff;
     border-radius: 50%;
 
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
     overflow: hidden;
 }
 
 .status {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 7px;
 
     margin-bottom: 10px;
-    padding: 7px 13px;
+    padding: 6px 11px;
 
+    border: 1px solid #dcfce7;
     border-radius: 20px;
 
-    background: #ecfdf3;
+    background: #f0fdf4;
     color: #16a34a;
 
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
 }
 
 .status-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
+
     display: inline-block;
 
     border-radius: 50%;
@@ -173,37 +176,45 @@ const { data, pending, error } = useAsyncData("user", () => getUser())
 }
 
 .profile-info {
-    margin-top: 20px;
-    margin-bottom: 30px;
+    margin-top: 18px;
+    margin-bottom: 25px;
 }
 
 .profile-info h1 {
     margin: 0;
 
-    color: #171717;
-    font-size: 28px;
+    color: #111827;
+
+    font-size: 25px;
     font-weight: 700;
 }
 
 .profile-info p {
-    margin: 6px 0 0;
+    margin: 5px 0 0;
 
-    color: #737373;
-    font-size: 15px;
+    color: #6b7280;
+
+    font-size: 14px;
 }
 
 .info-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 12px;
 }
 
 .info-item {
-    padding: 18px;
+    padding: 16px;
 
-    background: #f8f9fc;
-    border: 1px solid #eef0f4;
-    border-radius: 16px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    transition: border-color 0.2s ease;
+}
+
+.info-item:hover {
+    border-color: #d1d5db;
 }
 
 .label {
@@ -212,17 +223,21 @@ const { data, pending, error } = useAsyncData("user", () => getUser())
     margin-bottom: 7px;
 
     color: #9ca3af;
+
     font-size: 11px;
     font-weight: 600;
+
     text-transform: uppercase;
-    letter-spacing: 0.7px;
+    letter-spacing: 0.6px;
 }
 
 .info-item strong {
     display: block;
 
-    color: #262626;
-    font-size: 15px;
+    color: #111827;
+
+    font-size: 14px;
+    font-weight: 600;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -230,31 +245,32 @@ const { data, pending, error } = useAsyncData("user", () => getUser())
 }
 
 .role {
-    display: inline-block;
+    display: inline-flex;
 
-    padding: 5px 11px;
+    padding: 5px 10px;
 
-    border-radius: 20px;
+    border-radius: 7px;
 
-    background: #eff6ff;
-    color: #2563eb;
+    background: #f3f4f6;
+    color: #374151;
 
     font-size: 12px;
     font-weight: 600;
 }
 
 .role.admin {
-    background: #f3e8ff;
-    color: #9333ea;
+    background: #f3f4f6;
+    color: #111827;
 }
 
 .active {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 7px;
 
     color: #16a34a;
-    font-size: 14px;
+
+    font-size: 13px;
     font-weight: 600;
 }
 
@@ -266,17 +282,22 @@ const { data, pending, error } = useAsyncData("user", () => getUser())
     align-items: center;
     justify-content: center;
 
-    color: #737373;
+    color: #6b7280;
+}
+
+.loading p {
+    margin: 12px 0 0;
+
+    font-size: 14px;
 }
 
 .spinner {
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
 
-    margin-bottom: 15px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #111827;
 
-    border: 4px solid #e5e7eb;
-    border-top-color: #4f46e5;
     border-radius: 50%;
 
     animation: spin 0.8s linear infinite;
@@ -284,14 +305,19 @@ const { data, pending, error } = useAsyncData("user", () => getUser())
 
 .error-card {
     max-width: 500px;
-    margin: 80px auto;
-    padding: 25px;
+
+    margin: 60px auto;
+    padding: 18px;
 
     text-align: center;
 
-    border-radius: 16px;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+
     background: #fef2f2;
     color: #dc2626;
+
+    font-size: 14px;
 }
 
 @keyframes spin {
@@ -302,15 +328,15 @@ const { data, pending, error } = useAsyncData("user", () => getUser())
 
 @media (max-width: 600px) {
     .profile-page {
-        padding: 25px 15px;
+        padding: 20px 15px;
     }
 
     .profile-content {
-        padding: 0 20px 25px;
+        padding: 0 18px 20px;
     }
 
     .profile-header {
-        height: 120px;
+        height: 100px;
     }
 
     .info-grid {
@@ -318,14 +344,13 @@ const { data, pending, error } = useAsyncData("user", () => getUser())
     }
 
     .profile-info h1 {
-        font-size: 23px;
+        font-size: 22px;
     }
 
     .avatar {
-        width: 85px;
-        height: 85px;
-        margin-top: -42px;
+        width: 75px;
+        height: 75px;
+        margin-top: -38px;
     }
 }
-
 </style>
