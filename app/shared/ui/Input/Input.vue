@@ -5,6 +5,7 @@
             :type="props.type"
             :placeholder="props.placeholder"
             :disabled="props.disabled"
+            :required="props.required"
             v-model="model"
         >
     </div>
@@ -14,10 +15,11 @@
 interface IProp {
     type: "email" | "text" | "password" | "number";
     placeholder: string;
-    disabled?: boolean
+    disabled?: boolean;
+    required ?: boolean
 }
 
-const model = defineModel<string>()
+const model = defineModel<string | number>()
 const props = defineProps<IProp>()
 </script>
 
